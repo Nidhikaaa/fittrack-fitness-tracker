@@ -1,0 +1,1944 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FITTRACK | Gym & Fitness Tracker</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+    color:#202020;
+}
+
+/* ================= CREATE ACCOUNT ================= */
+
+#loginPage{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.72)),
+    url("https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80");
+    background-size:cover;
+    background-position:center;
+}
+
+.loginBox{
+    width:390px;
+    max-width:90%;
+    padding:35px;
+    border-radius:25px;
+    background:rgba(255,255,255,.96);
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+    text-align:center;
+}
+
+.logo{
+    font-size:40px;
+    font-weight:900;
+    letter-spacing:1px;
+    margin-bottom:10px;
+}
+
+.logo span{
+    color:#ed735d;
+}
+
+.loginBox p{
+    color:#777;
+    margin-bottom:25px;
+}
+
+.loginBox input{
+    width:100%;
+    padding:15px;
+    margin:7px 0;
+    border:1px solid #ddd;
+    border-radius:12px;
+    outline:none;
+    font-size:15px;
+}
+
+.loginBox input:focus{
+    border-color:#ed735d;
+}
+
+.mainBtn{
+    width:100%;
+    padding:15px;
+    margin-top:15px;
+    border:0;
+    border-radius:12px;
+    background:#ed735d;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.mainBtn:hover{
+    background:#db604b;
+    transform:translateY(-1px);
+}
+
+#error{
+    color:#d64545;
+    margin-top:12px;
+    font-size:14px;
+}
+
+/* ================= APP ================= */
+
+#app{
+    display:none;
+    min-height:100vh;
+    background:#f7f7f7;
+}
+
+header{
+    height:70px;
+    background:#171717;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 5%;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.headerLogo{
+    font-size:27px;
+    font-weight:900;
+}
+
+.headerLogo span{
+    color:#ed735d;
+}
+
+header button{
+    background:#ed735d;
+    border:0;
+    color:white;
+    padding:10px 18px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* ================= PAGES ================= */
+
+.page{
+    display:none;
+    padding:45px 6%;
+    min-height:calc(100vh - 70px);
+}
+
+.page.active{
+    display:block;
+}
+
+.hero{
+    margin-bottom:35px;
+}
+
+.hero h1{
+    font-size:42px;
+    margin-bottom:8px;
+}
+
+.hero p{
+    color:#777;
+    font-size:17px;
+}
+
+/* ================= NAV ================= */
+
+.nav{
+    display:flex;
+    gap:10px;
+    margin-bottom:30px;
+    flex-wrap:wrap;
+}
+
+.nav button{
+    padding:10px 16px;
+    border:0;
+    background:white;
+    border-radius:10px;
+    cursor:pointer;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+    font-weight:bold;
+}
+
+.nav button:hover{
+    background:#ed735d;
+    color:white;
+}
+
+/* ================= MUSCLE CARDS ================= */
+
+.muscleGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.muscleCard{
+    height:190px;
+    border-radius:20px;
+    overflow:hidden;
+    position:relative;
+    cursor:pointer;
+    background:#222;
+    transition:.25s;
+}
+
+.muscleCard:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 30px rgba(0,0,0,.2);
+}
+
+.muscleCard img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    opacity:.72;
+}
+
+.muscleOverlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(transparent,rgba(0,0,0,.85));
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:22px;
+    color:white;
+}
+
+.muscleOverlay h2{
+    font-size:25px;
+}
+
+.muscleOverlay p{
+    font-size:13px;
+    margin-top:5px;
+    color:#ddd;
+}
+
+/* ================= EXERCISES ================= */
+
+.exerciseTop{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+    gap:20px;
+}
+
+.backBtn{
+    border:0;
+    background:#222;
+    color:white;
+    padding:11px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.backBtn:hover{
+    background:#ed735d;
+}
+
+.resetBtn{
+    border:0;
+    background:#d9534f;
+    color:white;
+    padding:11px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-left:10px;
+}
+
+.resetBtn:hover{
+    background:#c63f3b;
+}
+
+.exerciseGrid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:22px;
+}
+
+.exerciseCard{
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    min-width:0;
+}
+
+.exerciseImage{
+    width:100%;
+    height:240px;
+    object-fit:contain;
+    background:#eee;
+    display:block;
+}
+
+.exerciseInfo{
+    padding:20px;
+}
+
+.exerciseInfo h3{
+    font-size:21px;
+    margin-bottom:6px;
+}
+
+.muscleTag{
+    display:inline-block;
+    background:#fff0ec;
+    color:#dc624d;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    margin-bottom:15px;
+}
+
+.inputs{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.inputs input{
+    width:100%;
+    padding:11px;
+    border:1px solid #ddd;
+    border-radius:9px;
+    outline:none;
+}
+
+.inputs input:focus{
+    border-color:#ed735d;
+}
+
+.trackBtn{
+    width:100%;
+    margin-top:10px;
+    padding:11px;
+    border:0;
+    border-radius:9px;
+    background:#ed735d;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.completed{
+    background:#35a76f !important;
+}
+
+/* ================= DASHBOARD STATS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.stat{
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.stat small{
+    color:#777;
+}
+
+.stat h2{
+    font-size:34px;
+    margin-top:8px;
+}
+
+.streak{
+    color:#ed735d;
+}
+
+/* ================= WATER ================= */
+
+.waterBox{
+    background:white;
+    border-radius:22px;
+    padding:30px;
+    max-width:650px;
+    margin:auto;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+    text-align:center;
+}
+
+.waterAnimation{
+    width:120px;
+    height:160px;
+    margin:15px auto 25px;
+    border:6px solid #222;
+    border-radius:18px 18px 28px 28px;
+    position:relative;
+    overflow:hidden;
+    background:#f4f4f4;
+}
+
+.waterAnimation:before{
+    content:"";
+    position:absolute;
+    top:-20px;
+    left:25px;
+    width:60px;
+    height:25px;
+    background:#222;
+    border-radius:8px;
+}
+
+.waterFill{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:8%;
+    background:#55bde8;
+    animation:waterMove 2s infinite ease-in-out;
+    transition:height .5s ease;
+}
+
+@keyframes waterMove{
+    0%,100%{
+        transform:translateY(1px);
+    }
+    50%{
+        transform:translateY(-2px);
+    }
+}
+
+.waterBox input{
+    padding:13px;
+    width:130px;
+    border:1px solid #ddd;
+    border-radius:9px;
+}
+
+.waterButtons{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    margin-top:15px;
+}
+
+.waterButtons button{
+    border:0;
+    padding:12px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    background:#ed735d;
+    color:white;
+    font-weight:bold;
+}
+
+.waterButtons button:hover{
+    background:#db604b;
+}
+
+.waterDisplay{
+    margin-top:20px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:850px){
+
+    .muscleGrid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .exerciseGrid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    .muscleGrid{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .exerciseTop{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .inputs{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     CREATE ACCOUNT
+===================================================== -->
+
+<section id="loginPage">
+
+    <div class="loginBox">
+
+        <div class="logo">
+            FIT<span>TRACK</span>
+        </div>
+
+        <p>
+            Create your account and start your fitness journey.
+        </p>
+
+        <input
+            id="nameInput"
+            type="text"
+            placeholder="Enter your name"
+        >
+
+        <input
+            id="emailInput"
+            type="email"
+            placeholder="Enter your email"
+        >
+
+        <input
+            id="passwordInput"
+            type="password"
+            placeholder="Create a password"
+        >
+
+        <button
+            class="mainBtn"
+            type="button"
+            onclick="createAccount()"
+        >
+            Create Account
+        </button>
+
+        <div id="error"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MAIN APP
+===================================================== -->
+
+<div id="app">
+
+<header>
+
+    <div class="headerLogo">
+        FIT<span>TRACK</span>
+    </div>
+
+    <div>
+        <span id="welcomeName"></span>
+
+        <button onclick="logout()">
+            Logout
+        </button>
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<section id="dashboard" class="page active">
+
+    <div class="hero">
+
+        <h1>
+            What are you training today?
+        </h1>
+
+        <p>
+            Choose a muscle group and build your workout.
+        </p>
+
+    </div>
+
+
+    <div class="nav">
+
+        <button onclick="showPage('dashboard')">
+            Dashboard
+        </button>
+
+        <button onclick="showPage('water')">
+            💧 Water
+        </button>
+
+        <button onclick="showPage('progress')">
+            🔥 Streak
+        </button>
+
+    </div>
+
+
+    <div class="muscleGrid">
+
+        <div
+            class="muscleCard"
+            onclick="openExercises('Back')"
+        >
+
+            <img
+                src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=900&q=80"
+                alt="Back workout"
+            >
+
+            <div class="muscleOverlay">
+                <h2>Back</h2>
+                <p>Pull • Row • Build</p>
+            </div>
+
+        </div>
+
+
+        <div
+            class="muscleCard"
+            onclick="openExercises('Chest')"
+        >
+
+            <img
+                src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=900&q=80"
+                alt="Chest workout"
+            >
+
+            <div class="muscleOverlay">
+                <h2>Chest</h2>
+                <p>Press • Push • Build</p>
+            </div>
+
+        </div>
+
+
+        <div
+            class="muscleCard"
+            onclick="openExercises('Legs')"
+        >
+
+            <img
+                src="https://images.unsplash.com/photo-1434608519344-49d77a699ded?auto=format&fit=crop&w=900&q=80"
+                alt="Leg workout"
+            >
+
+            <div class="muscleOverlay">
+                <h2>Legs</h2>
+                <p>Squat • Press • Strength</p>
+            </div>
+
+        </div>
+
+
+        <div
+            class="muscleCard"
+            onclick="openExercises('Shoulders')"
+        >
+
+            <img
+                src="https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?auto=format&fit=crop&w=900&q=80"
+                alt="Shoulder workout"
+            >
+
+            <div class="muscleOverlay">
+                <h2>Shoulders</h2>
+                <p>Press • Raise • Shape</p>
+            </div>
+
+        </div>
+
+
+        <div
+            class="muscleCard"
+            onclick="openExercises('Arms')"
+        >
+
+            <img
+                src="https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=900&q=80"
+                alt="Arm workout"
+            >
+
+            <div class="muscleOverlay">
+                <h2>Arms</h2>
+                <p>Curl • Push • Grow</p>
+            </div>
+
+        </div>
+
+
+        <div
+            class="muscleCard"
+            onclick="openExercises('Core')"
+        >
+
+            <img
+                src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80"
+                alt="Core workout"
+            >
+
+            <div class="muscleOverlay">
+                <h2>Core</h2>
+                <p>Crunch • Firm • Strong</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     EXERCISE PAGE
+===================================================== -->
+
+<section id="exercisePage" class="page">
+
+    <div class="exerciseTop">
+
+        <div>
+
+            <h1 id="exerciseTitle">
+                Exercises
+            </h1>
+
+            <p id="exerciseSubtitle">
+                Choose your exercises for today.
+            </p>
+
+        </div>
+
+        <button
+            class="backBtn"
+            onclick="goDashboard()"
+        >
+            ← Back
+        </button>
+
+    </div>
+
+
+    <div
+        id="exerciseGrid"
+        class="exerciseGrid"
+    ></div>
+
+</section>
+
+
+<!-- =====================================================
+     WATER PAGE
+===================================================== -->
+
+<section id="water" class="page">
+
+    <div class="hero">
+
+        <h1>
+            💧 Water Tracker
+        </h1>
+
+        <p>
+            Set your daily water target and keep yourself hydrated.
+        </p>
+
+    </div>
+
+
+    <div class="waterBox">
+
+        <h2>
+            How many litres do you want to drink today?
+        </h2>
+
+
+        <div class="waterAnimation">
+
+            <div
+                id="waterFill"
+                class="waterFill"
+            ></div>
+
+        </div>
+
+
+        <input
+            id="waterTarget"
+            type="number"
+            min="1"
+            step="0.1"
+            placeholder="Litres"
+        >
+
+
+        <div class="waterButtons">
+
+            <button onclick="setWaterTarget()">
+                Set Target
+            </button>
+
+            <button onclick="drinkWater()">
+                + 250 ml
+            </button>
+
+        </div>
+
+
+        <div
+            id="waterDisplay"
+            class="waterDisplay"
+        >
+            0 L / 0 L
+        </div>
+
+    </div>
+
+
+    <br>
+
+    <button
+        class="backBtn"
+        onclick="showPage('dashboard')"
+    >
+        ← Dashboard
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     PROGRESS PAGE
+===================================================== -->
+
+<section id="progress" class="page">
+
+    <div class="hero">
+
+        <h1>
+            🔥 Your Progress
+        </h1>
+
+        <p>
+            Keep showing up and build your streak.
+        </p>
+
+    </div>
+
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <small>
+                Current Streak
+            </small>
+
+            <h2 class="streak">
+
+                <span id="streakNumber">
+                    0
+                </span>
+
+                🔥
+
+            </h2>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                Exercises Completed
+            </small>
+
+            <h2 id="exerciseCount">
+                0
+            </h2>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                Water Today
+            </small>
+
+            <h2 id="waterStat">
+                0 L
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="backBtn"
+        onclick="showPage('dashboard')"
+    >
+        ← Dashboard
+    </button>
+
+    <button
+        class="resetBtn"
+        onclick="resetToday()"
+    >
+        ↻ Reset Today
+    </button>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   ACCOUNT
+===================================================== */
+
+function createAccount(){
+
+    const name =
+        document.getElementById("nameInput").value.trim();
+
+    const email =
+        document.getElementById("emailInput").value.trim();
+
+    const password =
+        document.getElementById("passwordInput").value.trim();
+
+    const error =
+        document.getElementById("error");
+
+
+    if(
+        name === "" ||
+        email === "" ||
+        password === ""
+    ){
+
+        error.textContent =
+            "Please fill in all three fields.";
+
+        return;
+    }
+
+
+    if(!email.includes("@")){
+
+        error.textContent =
+            "Please enter a valid email.";
+
+        return;
+    }
+
+
+    if(password.length < 4){
+
+        error.textContent =
+            "Password should contain at least 4 characters.";
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "fittrackUser",
+        name
+    );
+
+    localStorage.setItem(
+        "fittrackEmail",
+        email
+    );
+
+
+    document.getElementById("loginPage").style.display="none";
+
+    document.getElementById("app").style.display="block";
+
+    document.getElementById("welcomeName").textContent =
+        "Hi, " + name;
+
+
+    showPage("dashboard");
+
+
+    history.replaceState(
+        {page:"dashboard"},
+        "",
+        "#dashboard"
+    );
+}
+
+
+/* =====================================================
+   PAGE LOAD
+===================================================== */
+
+window.onload=function(){
+
+    const savedName =
+        localStorage.getItem("fittrackUser");
+
+
+    if(savedName){
+
+        document.getElementById("loginPage").style.display="none";
+
+        document.getElementById("app").style.display="block";
+
+        document.getElementById("welcomeName").textContent =
+            "Hi, " + savedName;
+
+        showPage("dashboard");
+
+    }else{
+
+        document.getElementById("loginPage").style.display="flex";
+
+        document.getElementById("app").style.display="none";
+    }
+
+
+    updateStats();
+
+    updateWater();
+};
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout(){
+
+    localStorage.removeItem("fittrackUser");
+
+    localStorage.removeItem("fittrackEmail");
+
+    location.reload();
+}
+
+
+/* =====================================================
+   PAGE NAVIGATION
+===================================================== */
+
+function showPage(page){
+
+    document.querySelectorAll(".page")
+        .forEach(function(p){
+
+            p.classList.remove("active");
+
+        });
+
+
+    const selected =
+        document.getElementById(page);
+
+
+    if(selected){
+
+        selected.classList.add("active");
+
+    }
+
+
+    window.scrollTo(0,0);
+}
+
+
+/* =====================================================
+   EXERCISE DATABASE
+===================================================== */
+
+const baseURL =
+"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/";
+
+
+const exercises = {
+
+Back:[
+    {
+        name:"Lat Pulldown",
+        tag:"BACK • LATS",
+        folder:"Wide-Grip_Lat_Pulldown"
+    },
+    {
+        name:"Seated Cable Row",
+        tag:"BACK • MIDDLE BACK",
+        folder:"Seated_Cable_Rows"
+    },
+    {
+        name:"Bent Over Barbell Row",
+        tag:"BACK • LATS",
+        folder:"Bent_Over_Barbell_Row"
+    },
+    {
+        name:"One Arm Lat Pulldown",
+        tag:"BACK • LATS",
+        folder:"One_Arm_Lat_Pulldown"
+    }
+],
+
+Chest:[
+    {
+        name:"Dumbbell Bench Press",
+        tag:"CHEST • TRICEPS",
+        folder:"Dumbbell_Bench_Press"
+    },
+    {
+        name:"Bench Press",
+        tag:"CHEST • TRICEPS",
+        folder:"Bench_Press_-_Powerlifting"
+    },
+    {
+        name:"Incline Bench Press",
+        tag:"CHEST • UPPER CHEST",
+        folder:"Barbell_Incline_Bench_Press_-_Medium_Grip"
+    },
+    {
+        name:"Push Up",
+        tag:"CHEST • TRICEPS",
+        folder:"Push-Up"
+    }
+],
+
+Legs:[
+    {
+        name:"Squat",
+        tag:"LEGS • QUADRICEPS",
+        folder:"Bodyweight_Squat"
+    },
+    {
+        name:"Leg Press",
+        tag:"LEGS • QUADRICEPS",
+        folder:"Leg_Press"
+    },
+    {
+        name:"Lying Leg Curl",
+        tag:"LEGS • HAMSTRINGS",
+        folder:"Lying_Leg_Curls"
+    },
+    {
+        name:"Barbell Hip Thrust",
+        tag:"LEGS • GLUTES",
+        folder:"Barbell_Hip_Thrust"
+    }
+],
+
+Shoulders:[
+    {
+        name:"Dumbbell Shoulder Press",
+        tag:"SHOULDERS • DELTOIDS",
+        folder:"Dumbbell_Shoulder_Press"
+    },
+    {
+        name:"Lateral Raise",
+        tag:"SHOULDERS • DELTOIDS",
+        folder:"Side_Lateral_Raise"
+    },
+    {
+        name:"Front Raise",
+        tag:"SHOULDERS • FRONT DELTS",
+        folder:"Front_Two-Dumbbell_Raise"
+    },
+    {
+        name:"Arnold Dumbbell Press",
+        tag:"SHOULDERS • DELTOIDS",
+        folder:"Arnold_Dumbbell_Press"
+    }
+],
+
+Arms:[
+    {
+        name:"Dumbbell Bicep Curl",
+        tag:"ARMS • BICEPS",
+        folder:"Dumbbell_Bicep_Curl"
+    },
+    {
+        name:"Hammer Curl",
+        tag:"ARMS • BICEPS",
+        folder:"Hammer_Curls"
+    },
+    {
+        name:"Triceps Pushdown",
+        tag:"ARMS • TRICEPS",
+        folder:"Triceps_Pushdown"
+    },
+    {
+        name:"Close Grip Bench Press",
+        tag:"ARMS • TRICEPS",
+        folder:"Close-Grip_Barbell_Bench_Press"
+    }
+],
+
+Core:[
+    {
+        name:"3/4 Sit-Up",
+        tag:"CORE • ABS",
+        folder:"3_4_Sit-Up"
+    },
+    {
+        name:"Ab Roller",
+        tag:"CORE • ABS",
+        folder:"Ab_Roller"
+    },
+    {
+        name:"Air Bike",
+        tag:"CORE • ABS",
+        folder:"Air_Bike"
+    },
+    {
+        name:"Heel Touchers",
+        tag:"CORE • ABS",
+        folder:"Alternate_Heel_Touchers"
+    }
+]
+
+};
+
+
+/* =====================================================
+   IMAGE TIMERS
+===================================================== */
+
+let exerciseTimers=[];
+
+
+/* =====================================================
+   OPEN EXERCISES
+===================================================== */
+
+function openExercises(group){
+
+    /*
+       Stop all previous exercise image animations.
+       This prevents Back images appearing in Legs,
+       Chest images appearing in Back, etc.
+    */
+
+    exerciseTimers.forEach(function(timer){
+
+        clearInterval(timer);
+
+    });
+
+    exerciseTimers=[];
+
+
+    document.getElementById("exerciseTitle").textContent =
+        group + " Exercises";
+
+
+    document.getElementById("exerciseSubtitle").textContent =
+        "Choose the exercises you want to do today.";
+
+
+    const grid =
+        document.getElementById("exerciseGrid");
+
+
+    /* Completely remove previous cards */
+
+    grid.innerHTML="";
+
+
+    exercises[group].forEach(function(ex,index){
+
+        const image1 =
+            baseURL +
+            ex.folder +
+            "/0.jpg";
+
+
+        const image2 =
+            baseURL +
+            ex.folder +
+            "/1.jpg";
+
+
+        const card =
+            document.createElement("div");
+
+
+        card.className="exerciseCard";
+
+
+        card.innerHTML=`
+
+            <img
+                class="exerciseImage"
+                id="exerciseImage${index}"
+                src="${image1}"
+                alt="${ex.name}"
+                onerror="imageFallback(this)"
+            >
+
+            <div class="exerciseInfo">
+
+                <h3>${ex.name}</h3>
+
+                <span class="muscleTag">
+                    ${ex.tag}
+                </span>
+
+                <div class="inputs">
+
+                    <input
+                        type="number"
+                        min="0"
+                        placeholder="Weight kg"
+                    >
+
+                    <input
+                        type="number"
+                        min="0"
+                        placeholder="Sets"
+                    >
+
+                    <input
+                        type="number"
+                        min="0"
+                        placeholder="Reps"
+                    >
+
+                </div>
+
+                <button
+                    class="trackBtn"
+                    onclick="completeExercise(this)"
+                >
+                    Add Exercise
+                </button>
+
+            </div>
+        `;
+
+
+        grid.appendChild(card);
+
+
+        let showingFirst=true;
+
+
+        const timer =
+            setInterval(function(){
+
+                const img =
+                    document.getElementById(
+                        "exerciseImage"+index
+                    );
+
+
+                if(!img){
+
+                    clearInterval(timer);
+
+                    return;
+                }
+
+
+                showingFirst=!showingFirst;
+
+
+                img.src =
+                    showingFirst
+                    ? image1
+                    : image2;
+
+
+            },1800);
+
+
+        exerciseTimers.push(timer);
+
+    });
+
+
+    showPage("exercisePage");
+
+
+    history.pushState(
+        {
+            page:"exercise",
+            group:group
+        },
+        "",
+        "#"+group.toLowerCase()
+    );
+}
+
+
+/* =====================================================
+   IMAGE FALLBACK
+===================================================== */
+
+function imageFallback(img){
+
+    img.onerror=null;
+
+    img.src =
+    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=80";
+}
+
+
+/* =====================================================
+   COMPLETE EXERCISE
+===================================================== */
+
+function completeExercise(button){
+
+    if(button.classList.contains("completed")){
+
+        return;
+    }
+
+
+    button.classList.add("completed");
+
+    button.textContent="✓ Added";
+
+
+    let count =
+        Number(
+            localStorage.getItem(
+                "exerciseCount"
+            ) || 0
+        );
+
+
+    count++;
+
+
+    localStorage.setItem(
+        "exerciseCount",
+        count
+    );
+
+
+    updateStats();
+
+    updateStreak();
+}
+
+
+/* =====================================================
+   GO DASHBOARD
+===================================================== */
+
+function goDashboard(){
+
+    exerciseTimers.forEach(function(timer){
+
+        clearInterval(timer);
+
+    });
+
+
+    exerciseTimers=[];
+
+
+    showPage("dashboard");
+
+
+    history.pushState(
+        {page:"dashboard"},
+        "",
+        "#dashboard"
+    );
+}
+
+
+/* =====================================================
+   STREAK
+===================================================== */
+
+function updateStreak(){
+
+    const today =
+        new Date().toDateString();
+
+
+    const lastDate =
+        localStorage.getItem(
+            "lastWorkoutDate"
+        );
+
+
+    let streak =
+        Number(
+            localStorage.getItem(
+                "streak"
+            ) || 0
+        );
+
+
+    if(lastDate===today){
+
+        document.getElementById(
+            "streakNumber"
+        ).textContent=streak;
+
+        return;
+    }
+
+
+    const yesterday =
+        new Date(
+            Date.now()-86400000
+        ).toDateString();
+
+
+    if(lastDate===yesterday){
+
+        streak++;
+
+    }else{
+
+        streak=1;
+    }
+
+
+    localStorage.setItem(
+        "streak",
+        streak
+    );
+
+
+    localStorage.setItem(
+        "lastWorkoutDate",
+        today
+    );
+
+
+    document.getElementById(
+        "streakNumber"
+    ).textContent=streak;
+}
+
+
+/* =====================================================
+   WATER
+===================================================== */
+
+let waterTarget =
+    Number(
+        localStorage.getItem(
+            "waterTarget"
+        ) || 0
+    );
+
+
+let waterDrunk =
+    Number(
+        localStorage.getItem(
+            "waterDrunk"
+        ) || 0
+    );
+
+
+function setWaterTarget(){
+
+    const value =
+        Number(
+            document.getElementById(
+                "waterTarget"
+            ).value
+        );
+
+
+    if(value<=0){
+
+        alert(
+            "Please enter a valid water target."
+        );
+
+        return;
+    }
+
+
+    waterTarget=value;
+
+    waterDrunk=0;
+
+
+    localStorage.setItem(
+        "waterTarget",
+        waterTarget
+    );
+
+
+    localStorage.setItem(
+        "waterDrunk",
+        waterDrunk
+    );
+
+
+    updateWater();
+}
+
+
+function drinkWater(){
+
+    if(waterTarget<=0){
+
+        alert(
+            "First enter how many litres you want to drink today."
+        );
+
+        return;
+    }
+
+
+    waterDrunk+=0.25;
+
+
+    if(waterDrunk>waterTarget){
+
+        waterDrunk=waterTarget;
+    }
+
+
+    localStorage.setItem(
+        "waterDrunk",
+        waterDrunk
+    );
+
+
+    updateWater();
+
+    updateStats();
+}
+
+
+function updateWater(){
+
+    const display =
+        document.getElementById(
+            "waterDisplay"
+        );
+
+
+    const fill =
+        document.getElementById(
+            "waterFill"
+        );
+
+
+    if(!display || !fill){
+
+        return;
+    }
+
+
+    display.textContent =
+        waterDrunk.toFixed(2) +
+        " L / " +
+        waterTarget.toFixed(2) +
+        " L";
+
+
+    let percent=0;
+
+
+    if(waterTarget>0){
+
+        percent=
+            Math.min(
+                100,
+                (waterDrunk/waterTarget)*100
+            );
+    }
+
+
+    fill.style.height =
+        Math.max(
+            8,
+            percent
+        )+"%";
+
+
+    const waterStat =
+        document.getElementById(
+            "waterStat"
+        );
+
+
+    if(waterStat){
+
+        waterStat.textContent =
+            waterDrunk.toFixed(2)+" L";
+    }
+}
+
+
+/* =====================================================
+   UPDATE STATS
+===================================================== */
+
+function updateStats(){
+
+    const count =
+        Number(
+            localStorage.getItem(
+                "exerciseCount"
+            ) || 0
+        );
+
+
+    const exerciseCount =
+        document.getElementById(
+            "exerciseCount"
+        );
+
+
+    if(exerciseCount){
+
+        exerciseCount.textContent=count;
+    }
+
+
+    const waterStat =
+        document.getElementById(
+            "waterStat"
+        );
+
+
+    if(waterStat){
+
+        waterStat.textContent =
+            waterDrunk.toFixed(2)+" L";
+    }
+
+
+    const streak =
+        Number(
+            localStorage.getItem(
+                "streak"
+            ) || 0
+        );
+
+
+    const streakNumber =
+        document.getElementById(
+            "streakNumber"
+        );
+
+
+    if(streakNumber){
+
+        streakNumber.textContent=streak;
+    }
+}
+
+
+/* =====================================================
+   RESET TODAY
+===================================================== */
+
+function resetToday(){
+
+    const confirmReset =
+        confirm(
+            "Are you sure you want to reset today's progress?"
+        );
+
+
+    if(!confirmReset){
+
+        return;
+    }
+
+
+    /*
+       Remove today's workout data.
+       Account information is NOT removed.
+    */
+
+    localStorage.removeItem(
+        "exerciseCount"
+    );
+
+    localStorage.removeItem(
+        "waterTarget"
+    );
+
+    localStorage.removeItem(
+        "waterDrunk"
+    );
+
+    localStorage.removeItem(
+        "streak"
+    );
+
+    localStorage.removeItem(
+        "lastWorkoutDate"
+    );
+
+
+    /* Reset JavaScript variables */
+
+    waterTarget=0;
+
+    waterDrunk=0;
+
+
+    /* Stop exercise animations */
+
+    exerciseTimers.forEach(function(timer){
+
+        clearInterval(timer);
+
+    });
+
+    exerciseTimers=[];
+
+
+    /* Update display */
+
+    updateWater();
+
+    updateStats();
+
+
+    /* Return to dashboard */
+
+    showPage("dashboard");
+
+
+    history.pushState(
+        {page:"dashboard"},
+        "",
+        "#dashboard"
+    );
+
+
+    alert(
+        "Today's progress has been reset successfully!"
+    );
+}
+
+
+/* =====================================================
+   BROWSER BACK BUTTON
+===================================================== */
+
+window.addEventListener(
+    "popstate",
+    function(){
+
+        const hash =
+            location.hash.replace(
+                "#",
+                ""
+            );
+
+
+        if(
+            hash==="dashboard" ||
+            hash===""
+        ){
+
+            showPage("dashboard");
+
+            return;
+        }
+
+
+        if(hash==="water"){
+
+            showPage("water");
+
+            return;
+        }
+
+
+        if(hash==="progress"){
+
+            showPage("progress");
+
+            return;
+        }
+
+
+        if(
+            hash==="back" ||
+            hash==="chest" ||
+            hash==="legs" ||
+            hash==="shoulders" ||
+            hash==="arms" ||
+            hash==="core"
+        ){
+
+            const group =
+                hash.charAt(0).toUpperCase() +
+                hash.slice(1);
+
+
+            openExercises(group);
+
+            return;
+        }
+
+
+        showPage("dashboard");
+
+    }
+);
+
+</script>
+
+</body>
+</html>
